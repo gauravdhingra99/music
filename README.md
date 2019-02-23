@@ -9,5 +9,5 @@ Backend :
 Django,Django-RestFramework
 
 Frontend:
-HTML,CSS,JAVASCRIPT
+HTML,CSS,JAVASCRIPT,BOOTSTRAP-TABLE
 
