@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+
+    <!-- href={% static "/login/images/icons/favicon.ico" %} /> -->
+	<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
+	<link rel="icon" type="image/png" href={% static "music/img/favicon.ico" %} />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>Music App</title>
+
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    
+    <link href={% static "music/css/bootstrap.css" %} rel="stylesheet"  />
+    <link href={% static "music/css/fresh-bootstrap-table.css" %} rel="stylesheet"  />
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+
+        <style type="text/css">
+
+        #fresh-table td:hover { 
+   background-color: blue;
+     transition: transform .2s; /* Animation */
+
+    }
+
+
+    td:hover {
+    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+    </style>
+
+        
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="toolbar" style="">
+    <h1 style="font-size: 75px;position: relative;top: 15px;left:425px;
+    font-family: 'Pacifico', cursive;">Musico</h1>    
+</div>
+
+
+    <div class="fresh-table full-color-blue full-screen-table">
+       
+         <div class="toolbar"  style="position: relative; left:800px;top:-125px;">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
+              Filters
+            </button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Filters</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+<form action="/api/filtersongs/" method="get">
+<div class="mode" style="display: inline-block;">
+    <h6>&nbsp;Choose Mode</h6>
+    <div class="form-check">
+        
+      &nbsp;<input class="form-check-input" type="radio" name="mode" id="exampleRadios1" value="0" >
+
+      <label class="form-check-label" for="exampleRadios1">
+        &nbsp; Mode 0
+      </label>
+    </div>
+    <div class="form-check">
+
+      &nbsp;<input class="form-check-input" type="radio" name="mode" id="exampleRadios2" value="1">
+      <label class="form-check-label" for="exampleRadios2">
+        &nbsp; Mode 1
+      </label>
+    </div>
+
+</div>
+
+<div class="loudness" style="display: inline-block;">
+    <h6> &nbsp; &nbsp; &nbsp;choose Loudness</h6>
+    <div class="form-check">
+      &nbsp;<input class="form-check-input" type="radio" name="loudness" id="exampleRadios1" value="<-4.5" >
+      <label class="form-check-label" for="exampleRadios1">
+       &nbsp; Loudness Greater than 4.5
+      </label>
+    </div>
+    <div class="form-check">
+      &nbsp;<input class="form-check-input" type="radio" name="loudness" id="exampleRadios2" value=">-4.5">
+      <label class="form-check-label" for="exampleRadios2">
+       &nbsp; Loudness less than 4.5
+      </label>
+    </div>
+</div>
+
+<div class="Key" style="display: inline-block;">
+    <h6>Choose Key</h6>
+
+<div class="form-check">
+  &nbsp;&nbsp;<input class="form-check-input" type="radio" name="key" id="exampleRadios1" value=">5" >
+  <label class="form-check-label" for="exampleRadios1">
+    &nbsp;&nbsp; Key Greater than 5
+  </label>
+</div>
+<div class="form-check">
+  &nbsp; <input class="form-check-input" type="radio" name="key" id="exampleRadios2" value="<5">
+  <label class="form-check-label" for="exampleRadios2">
+  &nbsp;&nbsp;  Key less than 5
+  </label>
+</div>
+
+</div>
+<div class="Dancebility" style="display: inline-block;">
+ <h6>&nbsp;&nbsp;choose Dancebility</h6>
+<div class="form-check">
+  &nbsp;<input class="form-check-input" type="radio" name="danceability" id="exampleRadios1" value=">0.5" >
+  <label class="form-check-label" for="exampleRadios1">
+    &nbsp;  Dancebility Greater than 0.5
+  </label>
+</div>
+<div class="form-check">
+ &nbsp; <input class="form-check-input" type="radio" name="danceability" id="exampleRadios2" value="<0.5">
+  <label class="form-check-label" for="exampleRadios2">
+   &nbsp; Dancebility less than 0.5
+  </label>
+</div>
+</div>
+  <input style="background-color: #4CAF50;border: 2px solid #4CAF50;height:35px;  border-radius: 20px;color:black;margin-left:87%;position:relative; top:-10px;" type="submit" value="Submit">
+
+</form>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:red; ">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+       
+        <table id="fresh-table" class="table">
+            <thead>
+                <th data-field="id">Rank</th>
+            	<th data-field="name" data-sortable="true">Name</th>
+            	<th data-field="artists" data-sortable="true">Artist</th>
+                <th data-field="danceability" data-sortable="true">Dancebility</th>
+                <th data-field="mode" data-sortable="true">mode</th>
+                <th data-field="loudness" data-sortable="true">Loudness</th>
+                <th data-field="key" data-sortable="true">key</th>
+
+
+
+            	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+            </thead>
+            <tbody>
+                {% for songs in songs %}
+                <tr>
+                <td>{{ songs.rank }}</td>    
+                <td><a href="/api/getsongdetails/?rank={{songs.rank}}">{{ songs.name }}</a></td>	
+            
+                	<td>{{ songs.artists }}</td>
+                    <td>{{ songs.danceability }}</td>
+                    <td>{{ songs.mode }}</td>
+                    <td>{{ songs.loudness }}</td>
+                    <td>{{ songs.key }}</td>
+
+
+                	<td></td>
+                </tr>
+                    {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+
+</body>
+
+    <script type="text/javascript" src={% static  "music/js/jquery-1.11.2.min.js" %}></script>
+    <script type="text/javascript" src={% static "music/js/bootstrap.js" %}>
+    </script>
+    <script type="text/javascript" src={% static "music/js/bootstrap-table.js" %}></script> 
+        
+    <script type="text/javascript">
+        var $table = $('#fresh-table'),
+            $alertBtn = $('#alertBtn'), 
+            full_screen = false,
+            window_height;
+            
+        $().ready(function(){
+            
+            window_height = $(window).height();
+            table_height = window_height - 20;
+            
+            
+            $table.bootstrapTable({
+                toolbar: ".toolbar",
+
+                
+                search: true,
+                showToggle: true,
+                showColumns: true,
+                pagination: true,
+                striped: true,
+                sortable: true,
+                height: table_height,
+                pageSize: 50,
+                pageList: [25,50,100],
+                
+                formatShowingRows: function(pageFrom, pageTo, totalRows){
+                    //do nothing here, we don't want to show the text "showing x of y from..." 
+                },
+                formatRecordsPerPage: function(pageNumber){
+                    return pageNumber + " rows visible";
+                },
+                icons: {
+                    
+                    toggle: 'fa fa-th-list',
+                    columns: 'fa fa-columns',
+                    detailOpen: 'fa fa-plus-circle',
+                    detailClose: 'fa fa-minus-circle'
+                }
+            });
+            
+            window.operateEvents = {
+                'click .like': function (e, value, row, index) {
+                    alert('You click like icon, row: ' + JSON.stringify(row));
+                    console.log(value, row, index);
+                },
+                'click .edit': function (e, value, row, index) {
+                    alert('You click edit icon, row: ' + JSON.stringify(row));
+                    console.log(value, row, index);    
+                },
+                'click .remove': function (e, value, row, index) {
+                    $table.bootstrapTable('remove', {
+                        field: 'id',
+                        values: [row.id]
+                    });
+            
+                }
+            };
+            
+            $alertBtn.click(function () {
+                alert("You pressed on Alert");
+            });
+        
+            
+            $(window).resize(function () {
+                $table.bootstrapTable('resetView');
+            });    
+        });
+        
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+                    '<i class="fa fa-heart"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+                    '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+                    '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('');
+        }
+       
+    </script>
+
+</html>
